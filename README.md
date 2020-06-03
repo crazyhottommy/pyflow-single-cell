@@ -1,2 +1,2 @@
-# pyflow-single-cell
-single-cell RNAseq ATACseq processing pipeline
+# CIDC_single_cell
+snakemake single cell pipeline for CIDC

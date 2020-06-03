@@ -1,0 +1,57 @@
+# SAMPLE JSON file
+
+SAMPLES_JSON: samples.json
+
+# Reference genome 
+genome:
+  # Genome fasta file for minimap2. Users can just download the fasta file 
+  # from http://cistrome.org/~chenfei/MAESTRO/Refdata_scATAC_MAESTRO_GRCh38_1.1.0.tar.gz and decompress it. 
+  # For example, 'Refdata_scATAC_MAESTRO_GRCh38_1.1.0/GRCh38_genome.fa'.
+  fasta: /liulab/mtang/references/Refdata_scATAC_MAESTRO_GRCh38_1.1.0/GRCh38_genome.fa
+
+promoter: /liulab/mtang/references/Refdata_scATAC_MAESTRO_GRCh38_1.1.0/GRCh38_promoter.bed
+
+# Species to use [GRCh38, GRCm38] (GRCh38 for human and GRCm38 for mouse)
+species: GRCh38
+
+# Platform of single cell ATAC-seq [10x-genomics, sci-ATAC-seq, microfluidic]
+platform: 10x-genomics
+
+
+# If the platform is 'sci-ATAC-seq' or '10x-genomics', please specify the barcode library (whitelist) 
+# so that the pipeline can correct cell barcodes with 1 base mismatched. 
+# Otherwise, the pipeline will automatically output the barcodes with enough read count (>1000).
+# The 10X Chromium whitelist file can be found inside the CellRanger-ATAC distribution. 
+# For example, in CellRanger-ATAC 1.1.0, the whitelist is 'cellranger-atac-1.1.0/cellranger-atac-cs/1.1.0/lib/python/barcodes/737K-cratac-v1.txt'. 
+whitelist: /liulab/mtang/references/cellranger-atac-1.2.0/cellranger-atac-cs/1.2.0/lib/python/barcodes/737K-cratac-v1.txt
+
+
+# Whether or not to provide custom peaks. [False, True]
+# If custompeaks is set as True, users need to provide the file location of peak file through custompeaksloc 
+# and then MAESTRO will merge the custom peak file and the peak file called from all fragments using MACS2. 
+# By default (False), the pipeline will use the peaks called using MACS2. DEFAULT: False.
+custompeaks: False
+
+# IF custompeaks = TRUE, provide the file location of custom peaks
+# The peak file is BED formatted with tab seperated. 
+# The first column is chromsome, the second is chromStart, and the third is chromEnd.
+custompeaksloc: 
+
+# Whether or not to call peaks from short fragments (shorter than 150bp). [True, False]
+# If it's set as True, MAESTRO will merge the peaks called from all fragments and those called from short fragments, 
+# and then use the merged peak file for further analysis.
+# If not (by default), the pipeline will only use peaks called from all fragments.
+shortpeaks: True
+
+# Quality control cutoff
+cutoff:
+  # Minimum number of peaks included in each cell. DEFAULT: 100.
+  peak: 100
+  # Cutoff for the number of count in each cell. DEFAULT: 1000.
+  count: 1000
+  # Cutoff for fraction of reads in promoter in each cell. DEFAULT: 0.2.
+  frip: 0.2
+  # Minimum number of cells covered by each peak. DEFAULT: 10.
+  cell: 10
+
+

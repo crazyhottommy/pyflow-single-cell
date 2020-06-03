@@ -1,0 +1,36 @@
+{
+    "5k_pbmc_v3": {
+        "I1": [
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L001_I1_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L002_I1_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L003_I1_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L004_I1_001.fastq.gz"
+        ],
+        "R1": [
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L001_R1_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L002_R1_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L003_R1_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L004_R1_001.fastq.gz"
+        ],
+        "R2": [
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L001_R2_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L002_R2_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L003_R2_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/5k_pbmc_v3_fastqs/5k_pbmc_v3_S1_L004_R2_001.fastq.gz"
+        ]
+    },
+    "pbmc_1k_v3": {
+        "I1": [
+            "/liulab/mtang/multi-sample_scRNAseq/data/pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_I1_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_I1_001.fastq.gz"
+        ],
+        "R1": [
+            "/liulab/mtang/multi-sample_scRNAseq/data/pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_R1_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_R1_001.fastq.gz"
+        ],
+        "R2": [
+            "/liulab/mtang/multi-sample_scRNAseq/data/pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L001_R2_001.fastq.gz",
+            "/liulab/mtang/multi-sample_scRNAseq/data/pbmc_1k_v3_fastqs/pbmc_1k_v3_S1_L002_R2_001.fastq.gz"
+        ]
+    }
+}

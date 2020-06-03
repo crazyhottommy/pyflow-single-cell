@@ -1,0 +1,26 @@
+"""
+A single cell ATACseq analysis pipeline.
+Author: Ming (Tommy) Tang  06/02/2020
+"""
+
+configfile: "config.yaml"
+
+#include: "rules/common.snakefile"
+# load the samples.json file
+FILES = json.load(open(config['SAMPLES_JSON']))
+ALL_SAMPLES = sorted(FILES.keys())
+
+
+PEAK_COUNT = expand("Result/Analysis/{sample}/{sample}_peak_count.h5", sample = ALL_SAMPLES)
+
+
+rule all:
+	input: PEAK_COUNT
+
+if config["platform"] == "10x-genomics":
+	include: "../rules/sc_atac_map.smk"
+	include: "../rules/sc_atac_preprocess.smk"
+	include: "../rules/sc_atac_fragment_generate.smk"
+	include: "../rules/sc_atac_qc.smk"
+	include: "../rules/sc_atac_peak_call.smk"
+	include: "../rules/sc_atac_peak_count.smk"
