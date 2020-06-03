@@ -18,9 +18,9 @@ rule all:
 	input: PEAK_COUNT
 
 if config["platform"] == "10x-genomics":
-	include: "../rules/sc_atac_map.smk"
-	include: "../rules/sc_atac_preprocess.smk"
-	include: "../rules/sc_atac_fragment_generate.smk"
-	include: "../rules/sc_atac_qc.smk"
-	include: "../rules/sc_atac_peak_call.smk"
-	include: "../rules/sc_atac_peak_count.smk"
+	include: "./rules/sc_atac_map.smk"
+	include: "./rules/sc_atac_preprocess.smk"
+	include: "./rules/sc_atac_fragment_generate.smk"
+	include: "./rules/sc_atac_qc.smk"
+	include: "./rules/sc_atac_peak_call.smk"
+	include: "./rules/sc_atac_peak_count.smk"

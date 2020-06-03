@@ -21,4 +21,4 @@ rule all:
 	input: TARGETS
 
 if config["platform"] == "10x-genomics":
-	include: "rules/sc_rna_map.smk"
+	include: "./rules/sc_rna_map.smk"
