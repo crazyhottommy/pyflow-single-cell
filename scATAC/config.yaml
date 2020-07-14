@@ -6,7 +6,7 @@ SAMPLES_JSON: samples.json
 # whether all the samples are from the same experiment. If so, peaks from all
 # all samples will be merged and a count matrix for each sample will be produced
 # based on the merged peak set
-batch: TRUE 
+batch: True
 
 
 # Reference genome 
