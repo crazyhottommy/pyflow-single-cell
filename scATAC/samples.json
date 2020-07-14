@@ -1,38 +1,38 @@
 {
     "atac_pbmc_1k_v1": {
         "I1": [
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L001_I1_001.fastq.gz",
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L002_I1_001.fastq.gz"
+            "data/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L001_I1_001.fastq.gz",
+            "data/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L002_I1_001.fastq.gz"
         ],
         "R1": [
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L001_R1_001.fastq.gz",
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L002_R1_001.fastq.gz"
+            "data/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L001_R1_001.fastq.gz",
+            "data/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L002_R1_001.fastq.gz"
         ],
         "R2": [
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L001_R2_001.fastq.gz",
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L002_R2_001.fastq.gz"
+            "data/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L001_R2_001.fastq.gz",
+            "data/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L002_R2_001.fastq.gz"
         ],
         "R3": [
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L001_R3_001.fastq.gz",
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L002_R3_001.fastq.gz"
+            "data/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L001_R3_001.fastq.gz",
+            "data/atac_pbmc_1k_v1_fastqs/atac_pbmc_1k_v1_S1_L002_R3_001.fastq.gz"
         ]
     },
     "atac_pbmc_500_v1": {
         "I1": [
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L001_I1_001.fastq.gz",
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L002_I1_001.fastq.gz"
+            "data/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L001_I1_001.fastq.gz",
+            "data/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L002_I1_001.fastq.gz"
         ],
         "R1": [
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L001_R1_001.fastq.gz",
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L002_R1_001.fastq.gz"
+            "data/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L001_R1_001.fastq.gz",
+            "data/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L002_R1_001.fastq.gz"
         ],
         "R2": [
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L001_R2_001.fastq.gz",
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L002_R2_001.fastq.gz"
+            "data/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L001_R2_001.fastq.gz",
+            "data/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L002_R2_001.fastq.gz"
         ],
         "R3": [
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L001_R3_001.fastq.gz",
-            "/liulab/mtang/multi-sample_scRNAseq/data/scatac/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L002_R3_001.fastq.gz"
+            "data/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L001_R3_001.fastq.gz",
+            "data/atac_pbmc_500_v1_fastqs/atac_pbmc_500_v1_S1_L002_R3_001.fastq.gz"
         ]
     }
 }

@@ -2,15 +2,23 @@
 
 SAMPLES_JSON: samples.json
 
+
+# whether all the samples are from the same experiment. If so, peaks from all
+# all samples will be merged and a count matrix for each sample will be produced
+# based on the merged peak set
+batch: TRUE 
+
+
 # Reference genome 
 genome:
   # Genome fasta file for minimap2. Users can just download the fasta file 
   # from http://cistrome.org/~chenfei/MAESTRO/Refdata_scATAC_MAESTRO_GRCh38_1.1.0.tar.gz and decompress it. 
   # For example, 'Refdata_scATAC_MAESTRO_GRCh38_1.1.0/GRCh38_genome.fa'.
-  fasta: /liulab/mtang/references/Refdata_scATAC_MAESTRO_GRCh38_1.1.0/GRCh38_genome.fa
+  #fasta: /liulab/mtang/references/Refdata_scATAC_MAESTRO_GRCh38_1.1.0/GRCh38_genome.fa
+  fasta: reference_files/GRCh38_genome.fa
 
-promoter: /liulab/mtang/references/Refdata_scATAC_MAESTRO_GRCh38_1.1.0/GRCh38_promoter.bed
-
+#promoter: /liulab/mtang/references/Refdata_scATAC_MAESTRO_GRCh38_1.1.0/GRCh38_promoter.bed
+promoter: reference_files/GRCh38_promoter.bed
 # Species to use [GRCh38, GRCm38] (GRCh38 for human and GRCm38 for mouse)
 species: GRCh38
 
@@ -23,8 +31,8 @@ platform: 10x-genomics
 # Otherwise, the pipeline will automatically output the barcodes with enough read count (>1000).
 # The 10X Chromium whitelist file can be found inside the CellRanger-ATAC distribution. 
 # For example, in CellRanger-ATAC 1.1.0, the whitelist is 'cellranger-atac-1.1.0/cellranger-atac-cs/1.1.0/lib/python/barcodes/737K-cratac-v1.txt'. 
-whitelist: /liulab/mtang/references/cellranger-atac-1.2.0/cellranger-atac-cs/1.2.0/lib/python/barcodes/737K-cratac-v1.txt
-
+#whitelist: /liulab/mtang/references/cellranger-atac-1.2.0/cellranger-atac-cs/1.2.0/lib/python/barcodes/737K-cratac-v1.txt
+whitelist: reference_files/whitelist/737K-cratac-v1.txt
 
 # Whether or not to provide custom peaks. [False, True]
 # If custompeaks is set as True, users need to provide the file location of peak file through custompeaksloc 
