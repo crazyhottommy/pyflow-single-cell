@@ -7,6 +7,14 @@ SAMPLES_JSON: samples.json
 # all samples will be merged and a count matrix for each sample will be produced
 # based on the merged peak set
 batch: True
+## if batch processing is True, when merging peaks from all samples, only keep
+## the peaks present in at least cutoff_samples samples
+cutoff_samples: 2
+
+# define the genome file with the 1st column as chromosome name and
+# the 2nd column as chromosome length
+chrom_len: chrom_len.txt
+
 
 
 # Reference genome 

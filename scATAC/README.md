@@ -9,8 +9,10 @@ cd scATAC
 # activate snakemake env
 conda activate MAESTRO
 
+## edit the config.yaml file
+
 ## generate a dummy samples.json file
-../utils/sample2json.py scatac ./data/
+../utils/sample2json.py scatac data/
 
 ```
 

@@ -1,16 +1,3 @@
-rule scatac_fragmentgenerate:
-        input:
-            bam = "Result/minimap2/{sample}/{sample}.sortedByPos.bam",
-            r2 = "Result/fastq/{sample}/{sample}_R2.fastq"
-        output:
-            fragments = "Result/minimap2/{sample}/fragments.tsv"
-        params:
-            outdir = "Result/minimap2/{sample}"
-        benchmark:
-            "Result/Benchmark/{sample}_FragGenerate.benchmark" 
-        shell:
-            "python ../utils/scATAC_FragmentGenerate.py -B {input.bam} -b {input.r2} -O {params.outdir}"
-
 
 if config["whitelist"]:
     rule scatac_barcodecorrect:
@@ -18,25 +5,37 @@ if config["whitelist"]:
             r2 = "Result/fastq/{sample}/{sample}_R2.fastq",
             whitelist = config["whitelist"]
         output:
-            bc_correct = "Result/minimap2/{sample}/barcode_correct.txt"
+            bc_correct = "Result/minimap2/{sample}/barcode_correct.txt",
+            bc_correct_uniq = "Result/minimap2/{sample}/barcode_correct_uniq.txt"
         params:
             outdir = "Result/minimap2/{sample}"
         benchmark:
             "Result/Benchmark/{sample}_BarcodeCorrect.benchmark" 
         shell:
-            "python ../utils/scATAC_10x_BarcodeCorrect.py -b {input.r2} -B {input.whitelist} -O {params.outdir}"
+            """
+            python utils/scATAC_10x_BarcodeCorrect.py -b {input.r2} -B {input.whitelist} -O {params.outdir}
+            
+            sort -k1,1 -k3,3 {output.bc_correct} | uniq > {output.bc_correct_uniq}
+            """
+
 else:
     rule scatac_barcodecorrect:
         input:
             r2 = "Result/fastq/{sample}/{sample}_R2.fastq",
         output:
-            bc_correct = "Result/minimap2/{sample}/barcode_correct.txt"
+            bc_correct = "Result/minimap2/{sample}/barcode_correct.txt",
+            bc_correct_uniq = "Result/minimap2/{sample}/barcode_correct_uniq.txt"
         params:
             outdir = "Result/minimap2/{sample}"
         benchmark:
             "Result/Benchmark/{sample}_BarcodeCorrect.benchmark" 
         shell:
-            "python ../utils/scATAC_10x_BarcodeCorrect.py -b {input.r2} -O {params.outdir}"        
+            """
+            python utils/scATAC_10x_BarcodeCorrect.py -b {input.r2} -O {params.outdir}
+
+            sort -k1,1 -k3,3 {output.bc_correct} | uniq > {output.bc_correct_uniq}
+            """
+
 
 rule scatac_fragmentcorrect:
     input:
@@ -52,7 +51,7 @@ rule scatac_fragmentcorrect:
         "Result/Benchmark/{sample}_FragCorrect.benchmark" 
     shell:
         """
-        python ../utils/scATAC_FragmentCorrect.py -F {input.fragments} -C {input.bc_correct} -O {params.outdir}
+        python utils/scATAC_FragmentCorrect.py -F {input.fragments} -C {input.bc_correct} -O {params.outdir}
 
         sort -k1,1 -k2,2 -k3,3 -k4,4 -V {params.frag_correct} > {output.frag_sort}
 

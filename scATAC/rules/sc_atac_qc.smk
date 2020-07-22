@@ -63,13 +63,13 @@ rule scatac_qcstat_singlecell:
 
 rule scatac_qcstat_bulk:
 	input:
-		bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.bam",
+		bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.bam",
 		promoter = config["promoter"],
 		peak = "Result/Analysis/{sample}/{sample}_all_peaks.narrowPeak"
 	output:
 		bulk_stat = "Result/QC/{sample}/flagstat.txt",
-		bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.unique.bam",
-		bed = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.unique.bed",
+		bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.unique.bam",
+		bed = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.unique.bed",
 	threads:
 		_samtools_thead
 	benchmark:
@@ -111,7 +111,7 @@ rule scatac_qcplot:
 		"Result/Benchmark/{sample}_QCPlot.benchmark" 
 	shell:
 		"""
-		Rscript ../utils/scATACseq_qc.R --bulkstat {params.bulk_stat} --fragment {params.fragbed} --singlestat {params.single_stat} \
+		Rscript utils/scATACseq_qc.R --bulkstat {params.bulk_stat} --fragment {params.fragbed} --singlestat {params.single_stat} \
 		--countcutoff {params.count} --fripcutoff {params.frip} --prefix {params.outpre} --outdir {params.outdir}
 		"""
 

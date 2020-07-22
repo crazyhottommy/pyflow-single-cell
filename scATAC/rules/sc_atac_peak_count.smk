@@ -20,3 +20,24 @@ rule scatac_countpeak:
 		MAESTRO scatac-peakcount --peak {input.finalpeak} --fragment {input.frag} --barcode {input.validbarcode} \
 		--species {params.species} --cores {threads} --directory {params.outdir} --outprefix {params.outpre}
 		"""
+
+rule scatac_qcfilter:
+    input:
+        count = "Result/Analysis/{sample}/{sample}_peak_count.h5" 
+    output:
+        filtercount = "Result/QC/{sample}/{sample}_filtered_peak_count.h5"
+    params:
+        outdir = "Result/QC",
+        outpre = "{sample}",
+        peak = config["cutoff"]["peak"],
+        cell = config["cutoff"]["cell"]
+    benchmark:
+        "Result/Benchmark/{sample}_QCFilter.benchmark"
+    shell:
+        """
+        MAESTRO scatac-qc --format h5 --peakcount {input.count} --peak-cutoff {params.peak} --cell-cutoff {params.cell} \
+        --directory {params.outdir} --outprefix {params.outpre}
+        """
+
+
+        

@@ -2,7 +2,7 @@ _shortfragment_threads = 8
 
 rule scatac_allpeakcall:
 	input:
-		bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.bam" 
+		bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.bam" 
 	output:
 		peak = "Result/Analysis/{sample}/{sample}_all_peaks.narrowPeak",
 		bdg = "Result/Analysis/{sample}/{sample}_all_treat_pileup.bdg"
@@ -18,9 +18,9 @@ rule scatac_allpeakcall:
 if config["shortpeaks"]:
 	rule scatac_shortfragment:
 		input:
-			bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.bam" 
+			bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.bam" 
 		output:
-			shortbam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.150bp.bam" 
+			shortbam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.150bp.bam" 
 		threads:
 			_shortfragment_threads
 		benchmark:
@@ -32,7 +32,7 @@ if config["shortpeaks"]:
 	
 	rule scatac_shortpeakcall:
 		input:
-			shortbam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.150bp.bam" 
+			shortbam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.150bp.bam" 
 		output:
 			bed = "Result/Analysis/{sample}/{sample}_150bp_peaks.narrowPeak"
 		params:
