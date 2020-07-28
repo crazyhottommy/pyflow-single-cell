@@ -2,7 +2,7 @@
 if config["whitelist"]:
     rule scatac_barcodecorrect:
         input:
-            r2 = "Result/fastq/{sample}/{sample}_R2.fastq",
+            r2 = "Result/Tmp/{sample}/{sample}_R2.fastq",
             whitelist = config["whitelist"]
         output:
             bc_correct = "Result/minimap2/{sample}/barcode_correct.txt",
