@@ -46,7 +46,7 @@ if config["shortpeaks"]:
         benchmark:
             "Result/Benchmark/{sample}_ShortPeakCall.benchmark" 
         shell:
-            "macs2 callpeak -f BAMPE -g {params.genome} --outdir Result/Analysis/{wildcards.sample} -n {params.name} -B -q 0.05 --nomodel --extsize=50 --SPMR -t --keep-dup all {input.shortbam}"
+            "macs2 callpeak -f BAMPE -g {params.genome} --outdir Result/Analysis/{wildcards.sample} -n {params.name} -B -q 0.05 --nomodel --extsize=50 --SPMR --keep-dup all -t {input.shortbam}"
 
 if config["custompeaks"] and config["shortpeaks"]:
     rule scatac_mergepeak:
