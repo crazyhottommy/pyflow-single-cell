@@ -32,7 +32,7 @@ rule scatac_fragmentgenerate:
         benchmark:
             "Result/Benchmark/{sample}_FragGenerate.benchmark" 
         shell:
-            "python utils/scATAC_FragmentGenerate.py -B {input.bam} -O {params.outdir} --addtag CR"
+            "python " + SCRIPT_PATH + "/scATAC_FragmentGenerate.py -B {input.bam} -O {params.outdir} --addtag CR"
 
 rule scatac_rmdp:
     input:
@@ -40,8 +40,7 @@ rule scatac_rmdp:
     output:
         bam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.rmdp.bam",
         metric = "Result/minimap2/{sample}/{sample}.rmdp.txt",
-        fragbed = "Result/QC/{sample}/{sample}_frag.bed",
-        #tmp = temp(directory("Result/{sample}"))
+        fragbed = "Result/QC/{sample}/{sample}_frag.bed"
     params:
         sam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.rmdp.sample.sam"
     threads:
@@ -71,11 +70,10 @@ rule scatac_bamaddCB:
         benchmark:
             "Result/Benchmark/{sample}_BamAddCB.benchmark"
         shell:
-            """
-            python utils/scATAC_BamAddTag.py -B {input.bam} -T {input.bc_correct} -C CR \
-            -O {params.outdir} -P {params.outprefix}
+            "python " +  SCRIPT_PATH + "/scATAC_BamAddTag.py -B {input.bam} -T {input.bc_correct} -C CR "
+            "-O {params.outdir} -P {params.outprefix}"
 
-            """
+            
 
 
 rule scatac_bamindex:

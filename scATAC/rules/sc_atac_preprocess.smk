@@ -18,7 +18,7 @@ rule scatac_preprocess:
         """
         gunzip -c {input.r1} > {output.r1cat} 2> {log}
         gunzip -c {input.r2} > {output.r2cat} 2>> {log}
-        gunzip -c {input.r1} > {output.r3cat} 2>> {log}
+        gunzip -c {input.r3} > {output.r3cat} 2>> {log}
         
         """
 
