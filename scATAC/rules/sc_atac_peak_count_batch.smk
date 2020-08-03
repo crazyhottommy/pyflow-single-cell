@@ -23,7 +23,7 @@ rule scatac_merge_peaks_batch:
         MAXGAP=30
 
         for f in {input}; do
-            bedtools sort -i $f | mergeBed -i - | cut -f 1-3 | grep -v '_' | grep -v 'chrEBV' > {params.catpeaksort}
+            bedtools sort -i $f | mergeBed -i - | cut -f 1-3 | grep -v '_' | grep -v 'chrEBV' >> {params.catpeaksort}
         done
 
         bedtools sort -i {params.catpeaksort} | bedtools genomecov -bga -i - -g {params.chrom_len} > {params.catpeakbdg}
