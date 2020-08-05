@@ -50,6 +50,21 @@ rule scatac_fragmentcorrect:
         "bedtools groupby -i {output.frag_sort} -g 1,2,3,4 -c 4 -o count > {output.frag_count}"
         
 
+rule scatac_fragmentindex:
+    input:
+        frag = "Result/minimap2/{sample}/fragments_corrected_count.tsv"
+    output:
+        fraggz = "Result/minimap2/{sample}/fragments_corrected_count.tsv.gz",
+        fragindex = "Result/minimap2/{sample}/fragments_corrected_count.tsv.gz.tbi"
+    benchmark:
+        "Result/Benchmark/{sample}_FragmentIndex.benchmark"
+    shell:
+        "bgzip -c {input.frag} > {output.fraggz};"
+        "tabix -p bed {output.fraggz}"
+
+
+
+
 
 
 

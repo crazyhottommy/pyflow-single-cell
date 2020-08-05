@@ -27,7 +27,7 @@ rule scatac_qcfilter:
     output:
         filtercount = "Result/QC/{sample}/{sample}_filtered_peak_count.h5"
     params:
-        outdir = "Result/QC",
+        outdir = "Result/QC/{sample}",
         outpre = "{sample}",
         peak = config["cutoff"]["peak"],
         cell = config["cutoff"]["cell"]
@@ -38,6 +38,26 @@ rule scatac_qcfilter:
         MAESTRO scatac-qc --format h5 --peakcount {input.count} --peak-cutoff {params.peak} --cell-cutoff {params.cell} \
         --directory {params.outdir} --outprefix {params.outpre}
         """
+
+rule scatac_genescore:
+    input:
+        filtercount = "Result/QC/{sample}/{sample}_filtered_peak_count.h5",
+        genebed = "%s/annotations/%s_ensembl.bed" %(SCRIPT_PATH, config["species"]),
+    output:
+        genescore = "Result/Analysis/{sample}/{sample}_gene_score.h5" 
+    params:
+        genedistance = config["genedistance"],
+        species = config["species"],
+        outdir = "Result/Analysis/{sample}",
+        outpre = "{sample}",
+        rpmodel = config["rpmodel"]
+    benchmark:
+        "Result/Benchmark/{sample}_GeneScore.benchmark"
+    shell:
+        "MAESTRO scatac-genescore --format h5 --peakcount {input.filtercount} --species {params.species} --directory {params.outdir} --outprefix {params.outpre} --model {params.rpmodel}"
+
+
+
 
 
         
