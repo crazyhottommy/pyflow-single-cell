@@ -37,8 +37,13 @@ if config["platform"] == "10x-genomics":
     include: "./rules/sc_atac_qc.smk"
     include: "./rules/sc_atac_peak_call.smk"
     include: "./rules/sc_atac_peak_count.smk"
-    if config.get("batch"):
+    if config.get("batch") and config.get("downsample"):
+        include: "./rules/sc_atac_peak_count_batch_downsample.smk"
+    elif config.get("batch") and not config.get("downsample"): 
         include: "./rules/sc_atac_peak_count_batch.smk"
     if config.get("annotation"):
         include: "./rules/sc_atac_annotation.smk"
     include: "./rules/sc_atac_report.smk"
+
+
+

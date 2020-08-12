@@ -11,6 +11,15 @@ batch: True
 ## the peaks present in at least cutoff_samples samples
 cutoff_samples: 2
 
+
+### for multiple samples from the same experiement, do you want to downsample the 
+### bam files to a certain number (target_reads) to get the peak set. if the sample 
+### has fewer than the target_reads, the original number of reads will be kept.
+### the counting of fragments will be carried out using this peak set but from the original
+### un-downsampled bam files.
+downsample: True
+target_reads: 5000000
+
 # define the genome file with the 1st column as chromosome name and
 # the 2nd column as chromosome length
 chrom_len: chrom_len.txt
