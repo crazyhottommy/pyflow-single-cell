@@ -14,7 +14,7 @@ rule scatac_analysis:
         cellcluster = "Result/Analysis/{sample}/{sample}_cell_cluster.txt"
     params:
         outdir = "Result/Analysis/{sample}",
-        genescore = "Result/Analysis/{sample}/{sample}_gene_score.h5",
+        genescore = "{sample}_gene_score.h5",
         outpre = "{sample}",
         count = "../../QC/{sample}/{sample}_filtered_peak_count.h5",
         fraggz = "../../minimap2/{sample}/fragments_corrected_count.tsv.gz",
