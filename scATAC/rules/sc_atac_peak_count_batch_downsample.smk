@@ -42,9 +42,9 @@ rule scatac_downsample_peak_call:
     input: 
         bams = expand("Result/miniap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.downsample.bam", sample = ALL_SAMPLES)
     output:
-        peak = "Result/Analysis/Batch/all_samples_peaks.bed"
+        peak = "Result/Analysis/Batch/all_samples_peaks.narrowPeak"
     params:
-        name = "all_samples_peaks",
+        name = "all_samples",
         genome = macs2_genome
     log:
         "Result/Log/batch_downsample_macs2_allpeak.log" 
@@ -56,7 +56,7 @@ rule scatac_downsample_peak_call:
 
 rule scatac_countpeak_batch:
     input:
-        finalpeak = "Result/Analysis/Batch/all_samples_peaks.bed",
+        finalpeak = "Result/Analysis/Batch/all_samples_peaks.narrowPeak",
         validbarcode = "Result/QC/{sample}/{sample}_scATAC_validcells.txt",
         frag = "Result/minimap2/{sample}/fragments_corrected_count.tsv"
     output:
