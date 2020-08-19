@@ -5,9 +5,6 @@
 
 _downsample_threads = 4
 
-if config.get("downsample"):
-    target_reads = config['target_reads']
-
 
 rule scatac_downsample_bam_batch:
     input: 
@@ -19,6 +16,8 @@ rule scatac_downsample_bam_batch:
         _downsample_threads
     message:
         "downsampling {input}"
+    params:
+        source_dir = os.path.dirname(srcdir("Snakefile"))
     log: 
         "Result/Log/{sample}_downsample_batch.log"
     benchmark:
@@ -30,12 +29,17 @@ rule scatac_downsample_bam_batch:
             line = f.readlines()[4]
             match_number = re.match(r'(\d.+) \+.+', line)
             total_reads = int(match_number.group(1))
-        if total_reads > target_reads:
-            down_rate = target_reads/total_reads
-        else:
-            down_rate = 1
-        shell("sambamba view -f bam -t {threads} --subsampling-seed=3 -s {rate} {inbam} \
+        if config.get("downsample"):
+            target_reads = config['target_reads']
+            if total_reads > target_reads:
+                down_rate = target_reads/total_reads
+            else:
+                down_rate = 1
+            shell("sambamba view -f bam -t {threads} --subsampling-seed=3 -s {rate} {inbam} \
             | samtools sort -m 2G -@ {threads} -T {outbam}.tmp > {outbam} 2> {log}".format(rate = down_rate, inbam = input[0], threads = threads, outbam = output[0], log = log))
+        else: #if set downsample to False, just make symbolic link for peak calling
+            shell("ln -s {inbam} {outbam}".format(inbam = params.source_dir + "/" + input.bam, outbam = output.bam))
+
 
 
 rule scatac_downsample_peak_call:

@@ -3,20 +3,37 @@
 SAMPLES_JSON: samples.json
 
 
+#######################################################################################
+
+############################# Multi-Sample processing parameters ######################
+
+#######################################################################################
+
 # whether all the samples are from the same experiment. If so, peaks from all
 # all samples will be merged and a count matrix for each sample will be produced
 # based on the merged peak set
 batch: True
-## if batch processing is True, when merging peaks from all samples, only keep
+
+
+## if batch processing is True, when merging peaks from all samples and
+## the user want to call peaks from each sample individually and merge the peaks to get 
+## consensus peaks , only keep
 ## the peaks present in at least cutoff_samples samples
+consensus_peaks: False
 cutoff_samples: 2
 
 
-### for multiple samples from the same experiement, do you want to downsample the 
-### bam files to a certain number (target_reads) to get the peak set. if the sample 
+
+### for multiple samples from the same experiement, do you want to get the peak set 
+### by calling peaks with all bam files merged. If so, set bulk_peaks to True.
+### bulk_peaks and consensus_peaks are mutually exclusive.
+### In case some samples are deeply sequenced and you can downsample the bam files 
+### to a certain number (target_reads) to get the peak set. if the sample 
 ### has fewer than the target_reads, the original number of reads will be kept.
+### peak calling will be carried out by feeding MACS2 -t sample1_downsample.bam sample2_downsample.bam
 ### the counting of fragments will be carried out using this peak set but from the original
-### un-downsampled bam files.
+### un-downsampled fragment files.
+bulk_peaks: True
 downsample: True
 target_reads: 5000000
 
@@ -25,6 +42,12 @@ target_reads: 5000000
 chrom_len: chrom_len.txt
 
 
+
+#######################################################################################
+
+############################# General processing parameters ###########################
+
+#######################################################################################
 
 # Reference genome 
 genome:
