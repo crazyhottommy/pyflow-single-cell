@@ -110,8 +110,7 @@ rule scatac_qcplot:
     benchmark:
         "Result/Benchmark/{sample}_QCPlot.benchmark" 
     shell:
-        """
-        Rscript utils/scATACseq_qc.R --bulkstat {params.bulk_stat} --fragment {params.fragbed} --singlestat {params.single_stat} \
-        --countcutoff {params.count} --fripcutoff {params.frip} --prefix {params.outpre} --outdir {params.outdir}
-        """
+        "Rscript" + RSCRIPT_PATH + "/scATACseq_qc.R --bulkstat {params.bulk_stat} --fragment {params.fragbed} --singlestat {params.single_stat} "
+        "--countcutoff {params.count} --fripcutoff {params.frip} --prefix {params.outpre} --outdir {params.outdir}"
+        
 
