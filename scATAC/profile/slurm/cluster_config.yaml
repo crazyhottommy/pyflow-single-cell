@@ -1,120 +1,120 @@
 __default__ :
-    job-name: "{rule}.{wildcards}"
-    ntasks:   "1"
-    cpus-per-task:    "{threads}"
-    nodes:    "1"
-    mem:    "4G"
-    time:   "15:00"
+  job-name: "{rule}.{wildcards}"
+  ntasks:   "1"
+  cpus-per-task:    "{threads}"
+  nodes:    "1"
+  mem:    "4G"
+  time:   "15:00"
 #    partition: "serial_requeue"  # default queue to submit, this is HPC specific. For Harvard FAS rc https://docs.rc.fas.harvard.edu/kb/running-jobs/
-    output:   "logs/{rule}/{rule}.{wildcards}.out"
-    error:    "logs/{rule}/{rule}.{wildcards}.err"
+  output:   "logs/{rule}/{rule}.{wildcards}.out"
+  error:    "logs/{rule}/{rule}.{wildcards}.err"
 
 # per rule specific configuration for multi-sample scATAC
 
 scatac_preprocess:
-    mem:    "4G"
-    time:   "1:00:00"
+  mem:    "4G"
+  time:   "1:00:00"
 
 scatac_fqaddbarcode:
-    mem:    "4G"  
-    time:   "30:00"
+  mem:    "4G"  
+  time:   "30:00"
 
 scatac_map:
-    mem:    "20G"
-    time:   "2:00:00"
+  mem:    "20G"
+  time:   "2:00:00"
 
 scatac_fragmentgenerate:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_rmdp:
-    mem:    "4G"
-    time:   "1:00:00"
+  mem:    "4G"
+  time:   "1:00:00"
 
 scatac_bamaddCB:
-    mem:    "4G"
-    time:   "1:00:00"
+  mem:    "4G"
+  time:   "1:00:00"
 
 scatac_bamindex:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_barcodecorrect:
-    mem:    "12G"
-    time:   "1:00:00"
+  mem:    "20G"
+  time:   "1:00:00"
 
 scatac_fragmentcorrect:
-    mem:   "4G" 
-    time:   "1:00:00"
+  mem:   "4G" 
+  time:   "1:00:00"
 
 scatac_fragmentindex:
-    mem:    "2G"
-    time:   "30:00"
+  mem:    "2G"
+  time:   "30:00"
 
 scatac_qcstat_mapped:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_qcstat_promoter:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_qcstat_singlecell:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_qcstat_bulk:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_qcplot:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_allpeakcall:
-    mem:    "8G"
-    time:   "30:00"
+  mem:    "8G"
+  time:   "30:00"
 
 scatac_shortfragment:
-    mem:    "8G"
-    time:   "30:00"
+  mem:    "8G"
+  time:   "30:00"
 
 scatac_shortpeakcall:
-    mem:    "8G"
-    time:   "30:00"
+  mem:    "8G"
+  time:   "30:00"
 
 scatac_mergepeak:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_countpeak:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_qcfilter:
-    mem:    "4G"
-    time:   "15:00"
+  mem:    "4G"
+  time:   "15:00"
 
 scatac_genescore:
-    mem:    "4G"
-    time:   "15:00"
+  mem:    "4G"
+  time:   "15:00"
 
 scatac_analysis:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 scatac_report:
-    mem:    "4G"
-    time:   "15:00"
+  mem:    "4G"
+  time:   "15:00"
 
 
 scatac_merge_peaks_batch:
-    mem:    "4G"
-    time:   "15:00"
+  mem:    "4G"
+  time:   "15:00"
 
 scatac_countpeak_batch:
-    mem:    "4G"
-    time:   "30:00"
+  mem:    "4G"
+  time:   "30:00"
 
 
 
