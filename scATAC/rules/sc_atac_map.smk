@@ -34,19 +34,20 @@ rule scatac_fragmentgenerate:
         shell:
             "python " + SCRIPT_PATH + "/scATAC_FragmentGenerate.py -B {input.bam} -O {params.outdir} --addtag CR"
 
-rule scatac_rmdp:
+
+rule scatac_markdp:
     input:
         bam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.bam",
     output:
-        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.rmdp.bam",
-        metric = "Result/minimap2/{sample}/{sample}.rmdp.txt",
+        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.markdp.bam",
+        metric = "Result/minimap2/{sample}/{sample}.markdp.txt",
         fragbed = "Result/QC/{sample}/{sample}_frag.bed"
     params:
-        sam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.rmdp.sample.sam"
+        sam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.markdp.sample.sam"
     threads:
         _picard_threads
     benchmark:
-        "Result/Benchmark/{sample}_Rmdp.benchmark" 
+        "Result/Benchmark/{sample}_Markdp.benchmark" 
     shell:
         """
         picard MarkDuplicates INPUT={input.bam} OUTPUT={output.bam} METRICS_FILE={output.metric} TMP_DIR=Result/Tmp
@@ -54,6 +55,23 @@ rule scatac_rmdp:
         samtools view -@ {threads} -s 0.01 -o {params.sam} {input.bam}
 
         awk '{{if ($9>0) print $9}}' {params.sam} > {output.fragbed}
+        """
+
+
+rule scatac_rmdp:
+    input:
+        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.bam",
+    output:
+        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.rmdp.bam",
+        metric = "Result/minimap2/{sample}/{sample}.rmdp.txt",
+    threads:
+        _picard_threads
+    benchmark:
+        "Result/Benchmark/{sample}_Rmdp.benchmark" 
+    shell:
+        """
+        picard MarkDuplicates INPUT={input.bam} OUTPUT={output.bam} METRICS_FILE={output.metric} --REMOVE_DUPLICATES=true TMP_DIR=Result/Tmp
+
         """
 
 rule scatac_bamaddCB:

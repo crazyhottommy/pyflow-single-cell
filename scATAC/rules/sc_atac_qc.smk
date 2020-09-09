@@ -63,13 +63,13 @@ rule scatac_qcstat_singlecell:
 
 rule scatac_qcstat_bulk:
     input:
-        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.bam",
+        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.markdp.bam",
         promoter = config["promoter"],
         peak = "Result/Analysis/{sample}/{sample}_all_peaks.narrowPeak"
     output:
         bulk_stat = "Result/QC/{sample}/flagstat.txt",
-        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.unique.bam",
-        bed = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.unique.bed",
+        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.markdp.unique.bam",
+        bed = "Result/minimap2/{sample}/{sample}.sortedByPos.CRadded.markdp.unique.bed",
     threads:
         _samtools_thead
     benchmark:
