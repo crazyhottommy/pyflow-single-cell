@@ -37,7 +37,7 @@ rule scatac_fragmentcorrect:
         fragments = "Result/minimap2/{sample}/fragments.tsv",
         bc_correct = "Result/minimap2/{sample}/barcode_correct.txt"
     output:
-        frag_count = temp("Result/minimap2/{sample}/fragments_corrected_count.tsv"),
+        frag_count = "Result/minimap2/{sample}/fragments_corrected_count.tsv",
         frag_sort = temp("Result/minimap2/{sample}/fragments_corrected_sorted.tsv")
     params:
         outdir = "Result/minimap2/{sample}",
