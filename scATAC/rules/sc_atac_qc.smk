@@ -3,7 +3,7 @@ _qcplot_threads = 4
 
 rule scatac_qcstat_mapped:
     input:
-        frag_count = "Result/minimap2/{sample}/fragments_corrected_count.tsv",
+        frag_count = get_fragments,
     output:
         mapped_stat = temp("Result/QC/{sample}/singlecell_mapped.txt"),
     params:
@@ -20,7 +20,7 @@ rule scatac_qcstat_mapped:
 
 rule scatac_qcstat_promoter:
     input:
-        frag_count = "Result/minimap2/{sample}/fragments_corrected_count.tsv",
+        frag_count = get_fragments,
         promoter = config["promoter"]
     output:
         promoter_stat = temp("Result/QC/{sample}/singlecell_promoter.txt"),

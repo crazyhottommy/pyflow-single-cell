@@ -6,12 +6,11 @@
 _downsample_threads = 4
 
 
-rule scatac_downsample_bam_batch:
+rule scatac_downsample_batch:
     input: 
-        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.bam",
-        bulk_stat = "Result/QC/{sample}/flagstat.txt"
+        frag_dedup = get_fragments,
     output:
-        bam = "Result/miniap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.downsample.bam"
+        frag_downsample = "Result/miniap2/{sample}/{sample}_fragment_corrected_downsample.tsv"
     threads:
         _downsample_threads
     message:
@@ -24,27 +23,25 @@ rule scatac_downsample_bam_batch:
         "Result/Benchmark/{sample}_downsample_batch.benchmark" 
     run:
         import re 
-        with open(input.bulk_stat, "r") as f:
-            # fifth line contains the number of mapped reads
-            line = f.readlines()[4]
-            match_number = re.match(r'(\d.+) \+.+', line)
-            total_reads = int(match_number.group(1))
+        from subprocess import check_output
+        total_reads = check_output("wc -l {frag_dedup}".format(frag_dedup = input.frag_dedup), shell = True).decode('utf8').strip().split()[0]
+        total_reads = int(total_reads)
         if config.get("downsample"):
             target_reads = config['target_reads']
             if total_reads > target_reads:
                 down_rate = target_reads/total_reads
             else:
                 down_rate = 1
-            shell("sambamba view -f bam -t {threads} --subsampling-seed=3 -s {rate} {inbam} \
-            | samtools sort -m 2G -@ {threads} -T {outbam}.tmp > {outbam} 2> {log}".format(rate = down_rate, inbam = input[0], threads = threads, outbam = output[0], log = log))
+            shell("cat {infrag} | awk 'BEGIN {{srand()}} !/^$/ {{ if (rand()<= {down_rate} print $0}}' \
+                > {outfrag} 2> {log}".format(infrag = input.frag_dedup, down_rate = down_rate, outfrag = output.frag_downsample, log = log))
         else: #if set downsample to False, just make symbolic link for peak calling
-            shell("ln -s {inbam} {outbam}".format(inbam = params.source_dir + "/" + input.bam, outbam = output.bam))
+            shell("ln -s {infrag} {outfrag}".format(infrag = params.source_dir + "/" + input.frag_dedup, outfrag = output.frag_downsample))
 
 
 
 rule scatac_downsample_peak_call:
     input: 
-        bams = expand("Result/miniap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.downsample.bam", sample = ALL_SAMPLES)
+        frags = expand("Result/miniap2/{sample}/{sample}_fragment_corrected_downsample.tsv", sample = ALL_SAMPLES)
     output:
         peak = "Result/Analysis/Batch/all_samples_peaks.narrowPeak"
     params:
@@ -55,14 +52,14 @@ rule scatac_downsample_peak_call:
     benchmark:
         "Result/Benchmark/batch_downsample_AllPeakCall.benchmark" 
     shell:
-        "macs2 callpeak -f BAMPE -g {params.genome} --outdir Result/Analysis/Batch -n {params.name} -B -q 0.05 --nomodel --extsize=50 --keep-dup all -t {input.bams}"
+        "macs2 callpeak -f BEDPE -g {params.genome} --outdir Result/Analysis/Batch -n {params.name} -B -q 0.05 --nomodel --extsize=50 --keep-dup all -t {input.frags}"
 
 
 rule scatac_countpeak_batch:
     input:
         finalpeak = "Result/Analysis/Batch/all_samples_peaks.narrowPeak",
         validbarcode = "Result/QC/{sample}/{sample}_scATAC_validcells.txt",
-        frag = "Result/minimap2/{sample}/fragments_corrected_count.tsv"
+        frag = get_fragments
     output:
         count = "Result/Analysis/Batch/{sample}/{sample}_peak_count.h5"
     params:
