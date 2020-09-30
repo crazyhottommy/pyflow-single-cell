@@ -20,11 +20,11 @@ if config["deduplication"] == "cell level":
         output:
             frag_dedup = temp("Result/minimap2/{sample}/fragments_corrected_cell_dedup_count.tsv"),
         params:
-            source_dir = os.path.dirname(srcdir("Snakefile"))
+            source_dir = os.path.dirname(os.path.dirname(srcdir("Snakefile"))) # strip the /rules from srcdir("Snakefile") 
         benchmark:
             "Result/Benchmark/{sample}_Celldedup.benchmark" 
         shell:
-            "ln -s {params.source_dir}/{input.frag_count} > {output.frag_dedup};"
+            "ln -s {params.source_dir}/{input.frag_count} {output.frag_dedup};"
 elif config["deduplication"] == "bulk level":
     rule scatac_bulkdedup:
         input:
