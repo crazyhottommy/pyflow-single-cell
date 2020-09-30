@@ -10,13 +10,13 @@ rule scatac_downsample_batch:
     input: 
         frag_dedup = get_fragments,
     output:
-        frag_downsample = "Result/miniap2/{sample}/{sample}_fragment_corrected_downsample.tsv"
+        frag_downsample = "Result/minimap2/{sample}/{sample}_fragment_corrected_downsample.tsv"
     threads:
         _downsample_threads
     message:
         "downsampling {input}"
     params:
-        source_dir = os.path.dirname(srcdir("Snakefile"))
+        source_dir = os.path.dirname(os.path.dirname(srcdir("Snakefile")))
     log: 
         "Result/Log/{sample}_downsample_batch.log"
     benchmark:
@@ -32,7 +32,7 @@ rule scatac_downsample_batch:
                 down_rate = target_reads/total_reads
             else:
                 down_rate = 1
-            shell("cat {infrag} | awk 'BEGIN {{srand()}} !/^$/ {{ if (rand()<= {down_rate} print $0}}' \
+            shell("perl -ne 'print if (rand() <= {down_rate})' {infrag} \
                 > {outfrag} 2> {log}".format(infrag = input.frag_dedup, down_rate = down_rate, outfrag = output.frag_downsample, log = log))
         else: #if set downsample to False, just make symbolic link for peak calling
             shell("ln -s {infrag} {outfrag}".format(infrag = params.source_dir + "/" + input.frag_dedup, outfrag = output.frag_downsample))
@@ -41,7 +41,7 @@ rule scatac_downsample_batch:
 
 rule scatac_downsample_peak_call:
     input: 
-        frags = expand("Result/miniap2/{sample}/{sample}_fragment_corrected_downsample.tsv", sample = ALL_SAMPLES)
+        frags = expand("Result/minimap2/{sample}/{sample}_fragment_corrected_downsample.tsv", sample = ALL_SAMPLES)
     output:
         peak = "Result/Analysis/Batch/all_samples_peaks.narrowPeak"
     params:
