@@ -18,7 +18,7 @@ if config["deduplication"] == "cell level":
         input:
             frag_count = "Result/minimap2/{sample}/fragments_corrected_count.tsv",
         output:
-            frag_dedup = temp("Result/minimap2/{sample}/fragments_corrected_cell_dedup_count.tsv"),
+            frag_dedup = "Result/minimap2/{sample}/fragments_corrected_cell_dedup_count.tsv",
         params:
             source_dir = os.path.dirname(os.path.dirname(srcdir("Snakefile"))) # strip the /rules from srcdir("Snakefile") 
         benchmark:
@@ -30,7 +30,7 @@ elif config["deduplication"] == "bulk level":
         input:
             frag_count = "Result/minimap2/{sample}/fragments_corrected_count.tsv",
         output:
-            frag_dedup = temp("Result/minimap2/{sample}/fragments_corrected_bulk_dedup_count.tsv"),
+            frag_dedup = "Result/minimap2/{sample}/fragments_corrected_bulk_dedup_count.tsv",
         benchmark:
             "Result/Benchmark/{sample}_Bulkdedup.benchmark" 
         shell:
