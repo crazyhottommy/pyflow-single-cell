@@ -1,4 +1,4 @@
-_shortfragment_threads = 8
+_shortfragment_threads = 2
 
 macs2_genome = "hs" if config["species"] == "GRCh38" else "mm"
 
