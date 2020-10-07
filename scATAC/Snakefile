@@ -14,11 +14,13 @@ ALL_SAMPLES = sorted(FILES.keys())
 
 TARGET = []
 
+BIGWIGS = expand("Result/Analysis/{sample}/{sample}.bw", sample = ALL_SAMPLES)
 PEAK_COUNT = expand("Result/Analysis/{sample}/{sample}_peak_count.h5", sample = ALL_SAMPLES)
 PEAK_BATCH_COUNT = expand("Result/Analysis/Batch/{sample}/{sample}_peak_count.h5", sample = ALL_SAMPLES)
 CLUSTER_ANNOTATION = expand("Result/Analysis/{sample}/{sample}_cell_cluster.txt", sample = ALL_SAMPLES)
 REPORTS = expand("Result/Report/{sample}_scATAC_report.html", sample = ALL_SAMPLES)
 
+TARGET.extend(BIGWIGS)
 TARGET.extend(PEAK_COUNT)
 TARGET.extend(REPORTS)
 

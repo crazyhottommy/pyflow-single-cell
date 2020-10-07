@@ -130,7 +130,19 @@ else:
             rm {params.catpeaksort}
             """
 
-
+rule scatac_bdg2bw:
+    input: 
+        bdg = "Result/Analysis/{sample}/{sample}_all_treat_pileup.bdg"
+    output:
+        bw = "Result/Analysis/{sample}/{sample}.bw"
+    benchmark:
+        "Result/Benchmark/{sample}_Bdg2Bw.benchmark"
+    params:
+        chrom_len = config["chrom_len"]
+    shell:
+        """
+        ./utils/bedGraphToBigWig {input.bdg} {params.chrom_len} {output.bw}
+        """
 
 
 
