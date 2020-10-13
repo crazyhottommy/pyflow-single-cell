@@ -1,10 +1,10 @@
-_shortfragment_threads = 8
+_shortfragment_threads = 2
 
 macs2_genome = "hs" if config["species"] == "GRCh38" else "mm"
 
 rule scatac_allpeakcall:
     input:
-        bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.bam" 
+        frag_dedup = get_fragments 
     output:
         peak = "Result/Analysis/{sample}/{sample}_all_peaks.narrowPeak",
         bdg = "Result/Analysis/{sample}/{sample}_all_treat_pileup.bdg"
@@ -16,26 +16,24 @@ rule scatac_allpeakcall:
     benchmark:
         "Result/Benchmark/{sample}_AllPeakCall.benchmark" 
     shell:
-        "macs2 callpeak -f BAMPE -g {params.genome} --outdir Result/Analysis/{wildcards.sample} -n {params.name} -B -q 0.05 --nomodel --extsize=50 --SPMR --keep-dup all -t {input.bam}"
+        "macs2 callpeak -f BEDPE -g {params.genome} --outdir Result/Analysis/{wildcards.sample} -n {params.name} -B -q 0.05 --nomodel --extsize=50 --SPMR --keep-dup all -t {input.frag_dedup}"
 
 if config["shortpeaks"]:
     rule scatac_shortfragment:
         input:
-            bam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.bam" 
+            frag_dedup = get_fragments
         output:
-            shortbam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.150bp.bam" 
+            frag_short = "Result/minimap2/{sample}/fragments_corrected_150bp.tsv" 
         threads:
             _shortfragment_threads
         benchmark:
             "Result/Benchmark/{sample}_ShortFrag.benchmark" 
         shell:
-            "samtools view -@ {threads} -h {input.bam} | "
-            "awk -F'\\t' 'function abs(x){{return ((x < 0.0) ? -x : x)}} {{if (abs($9)<=150) print}}' | "
-            "samtools view -@ {threads} -b -o {output.shortbam}"
+            "awk -F'\\t' 'function abs(x){{return ((x < 0.0) ? -x : x)}} {{if (abs($3-$2)<=150) print}}' {input.frag_dedup} > {output.frag_short}" 
     
     rule scatac_shortpeakcall:
         input:
-            shortbam = "Result/minimap2/{sample}/{sample}.sortedByPos.rmdp.CBadded.150bp.bam" 
+            frag_short = "Result/minimap2/{sample}/fragments_corrected_150bp.tsv" 
         output:
             bed = "Result/Analysis/{sample}/{sample}_150bp_peaks.narrowPeak"
         params:
@@ -46,7 +44,7 @@ if config["shortpeaks"]:
         benchmark:
             "Result/Benchmark/{sample}_ShortPeakCall.benchmark" 
         shell:
-            "macs2 callpeak -f BAMPE -g {params.genome} --outdir Result/Analysis/{wildcards.sample} -n {params.name} -B -q 0.05 --nomodel --extsize=50 --SPMR --keep-dup all -t {input.shortbam}"
+            "macs2 callpeak -f BEDPE -g {params.genome} --outdir Result/Analysis/{wildcards.sample} -n {params.name} -B -q 0.05 --nomodel --extsize=50 --SPMR --keep-dup all -t {input.frag_short}"
 
 if config["custompeaks"] and config["shortpeaks"]:
     rule scatac_mergepeak:
@@ -132,7 +130,19 @@ else:
             rm {params.catpeaksort}
             """
 
-
+rule scatac_bdg2bw:
+    input: 
+        bdg = "Result/Analysis/{sample}/{sample}_all_treat_pileup.bdg"
+    output:
+        bw = "Result/Analysis/{sample}/{sample}.bw"
+    benchmark:
+        "Result/Benchmark/{sample}_Bdg2Bw.benchmark"
+    params:
+        chrom_len = config["chrom_len"]
+    shell:
+        """
+        ./utils/bedGraphToBigWig {input.bdg} {params.chrom_len} {output.bw}
+        """
 
 
 

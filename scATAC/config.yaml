@@ -3,19 +3,51 @@
 SAMPLES_JSON: samples.json
 
 
+#######################################################################################
+
+############################# Multi-Sample processing parameters ######################
+
+#######################################################################################
+
 # whether all the samples are from the same experiment. If so, peaks from all
 # all samples will be merged and a count matrix for each sample will be produced
 # based on the merged peak set
 batch: True
-## if batch processing is True, when merging peaks from all samples, only keep
+
+
+## if batch processing is True, when merging peaks from all samples and
+## the user want to call peaks from each sample individually and merge the peaks to get 
+## consensus peaks , only keep
 ## the peaks present in at least cutoff_samples samples
+consensus_peaks: False
 cutoff_samples: 2
+
+
+
+### for multiple samples from the same experiement, do you want to get the peak set 
+### by calling peaks with all bam files merged. If so, set bulk_peaks to True.
+### bulk_peaks and consensus_peaks are mutually exclusive.
+### In case some samples are deeply sequenced and you can downsample the bam files 
+### to a certain number (target_reads) to get the peak set. if the sample 
+### has fewer than the target_reads, the original number of reads will be kept.
+### peak calling will be carried out by feeding MACS2 -t sample1_downsample.bam sample2_downsample.bam
+### the counting of fragments will be carried out using this peak set but from the original
+### un-downsampled fragment files.
+bulk_peaks: True
+downsample: True
+target_reads: 5000000
 
 # define the genome file with the 1st column as chromosome name and
 # the 2nd column as chromosome length
 chrom_len: chrom_len.txt
 
 
+
+#######################################################################################
+
+############################# General processing parameters ###########################
+
+#######################################################################################
 
 # Reference genome 
 genome:
@@ -41,6 +73,10 @@ platform: 10x-genomics
 # If the format is 'bam', bam needs to be set.
 # If the format is 'fragments', frag needs to be set.
 format: fastq
+
+
+# deduplication at cell level or bulk level. "cell level" or "bulk level"
+deduplication: "cell level"
 
 # If the platform is 'sci-ATAC-seq' or '10x-genomics', please specify the barcode library (whitelist) 
 # so that the pipeline can correct cell barcodes with 1 base mismatched. 
@@ -90,12 +126,12 @@ custompeaksloc:
 # If not (by default), the pipeline will only use peaks called from all fragments.
 shortpeaks: True
 
-# The RP model to use to calaculate gene score. [Simple, Adjusted]
+# The RP model to use to calaculate gene score. [Simple, Enhanced ]
 # For each gene, simple model sums over the impact of all regulatory elements within the up/dowm-stream of TSS. 
-# On the basis of simple model, adjusted model gives the regulatory elements within the exon region a higher weight, 
+# On the basis of simple model, Enhanced model gives the regulatory elements within the exon region a higher weight, 
 # and also excludes the regulatory elements overlapped with another gene (the promoter and exon of a nearby gene). 
-# See the MAESTRO paper for more details. DEFAULT: Adjusted.
-rpmodel: Adjusted
+# See the MAESTRO paper for more details. DEFAULT: Enhanced.
+rpmodel: Enhanced
 
 # Gene score decay distance, could be optional from 1kb (promoter-based regulation) and 10kb(enhancer-based regulation), default is 10kb
 genedistance: 10000
