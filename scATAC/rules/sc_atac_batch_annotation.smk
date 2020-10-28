@@ -45,7 +45,7 @@ rule scatac_batch_merge_fragment:
 
         cat {params.tmp_fragments} | bgzip > {output}
         rm {params.tmp_fragments}
-
+        tabix -p bed {output}
         """
 
 rule scatac_batch_analysis:
