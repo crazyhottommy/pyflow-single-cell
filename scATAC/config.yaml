@@ -2,7 +2,6 @@
 
 SAMPLES_JSON: samples.json
 
-
 #######################################################################################
 
 ############################# Multi-Sample processing parameters ######################
@@ -72,11 +71,14 @@ platform: 10x-genomics
 # If the format is 'fastq', fastqdir and fastqprefix need to be set.
 # If the format is 'bam', bam needs to be set.
 # If the format is 'fragments', frag needs to be set.
-format: fastq
+format: fragments
 
 
 # deduplication at cell level or bulk level. "cell level" or "bulk level"
 deduplication: "cell level"
+
+
+input_path: /liulab/mtang/multi-sample_scRNAseq/scATAC_fragment/data
 
 # If the platform is 'sci-ATAC-seq' or '10x-genomics', please specify the barcode library (whitelist) 
 # so that the pipeline can correct cell barcodes with 1 base mismatched. 
@@ -89,7 +91,7 @@ whitelist: reference_files/whitelist/737K-cratac-v1.txt
 # Whether or not to perform ccell-type annotation.
 # By default (not set), MAESTRO will skip the step of cell-type annotation. 
 # If set, please specify the method of cell-type annotation through method.
-annotation: False
+annotation: True
 
 # Method to annotate cell types [RP-based, peak-based, both]. 
 # MAESTRO provides two strategies to annotate cell types for scATAC-seq data. 
