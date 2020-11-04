@@ -10,6 +10,6 @@ rule scatac_link_fragments:
 		# make sure it is sorted 
 		gunzip -c {input.frag} | sort -k1,1 -k2,2n > {output.frag_dedup}
 
-		cat {input.frag} | bgzip > {output.fraggz}
+		cat {output.frag_dedup} | bgzip > {output.fraggz}
 		tabix -p bed {output.fraggz}
 		"""
