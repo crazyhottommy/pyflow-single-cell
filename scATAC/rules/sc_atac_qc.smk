@@ -99,7 +99,7 @@ elif config["format"] == "fragments":
             "Result/Benchmark/{sample}/{sample}_BulkQCStat.benchmark"
         shell:
             """
-            awk '{{print $3-$2}}' > {output.fragbed}
+            awk '{{print $3-$2}}' {input.frag_dedup} > {output.fragbed}
             grep 'chrM' {input.frag_dedup} -c >> {output.bulk_stat} || true
             grep -v 'chrM' {input.frag_dedup} | bedtools intersect -wa -a - -b {input.promoter} -u | wc -l >> {output.bulk_stat} || true
             grep -v 'chrM' {input.frag_dedup} | bedtools intersect -wa -a - -b {input.peak} -u | wc -l >> {output.bulk_stat} || true 
