@@ -138,10 +138,19 @@ rule scatac_bdg2bw:
     benchmark:
         "Result/Benchmark/{sample}_Bdg2Bw.benchmark"
     params:
-        chrom_len = config["chrom_len"]
+        chrom_len = config["chrom_len"],
+        sort_bdg = "Result/Analysis/{sample}/{sample}_sort.bdg",
+        clip_bdg = "Result/Analysis/{sample}/{sample}_sort.clip"
     shell:
         """
-        ./utils/bedGraphToBigWig {input.bdg} {params.chrom_len} {output.bw}
+        # https://gist.github.com/taoliu/2469050  bdg file generated from MACS2 can exceed chromosome limits
+        bedtools slop -i {input.bdg} -g {params.chrom_len} -b 0 | ./utils/bedClip stdin {params.chrom_len} {params.clip_bdg}
+        sort -k1,1 -k2,2n {params.clip_bdg} > {params.sort_bdg}
+
+        ./utils/bedGraphToBigWig {params.sort_bdg} {params.chrom_len} {output.bw}
+
+        rm {params.sort_bdg}
+        rm {params.clip_bdg}
         """
 
 

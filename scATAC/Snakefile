@@ -24,14 +24,37 @@ TARGET.extend(BIGWIGS)
 TARGET.extend(PEAK_COUNT)
 TARGET.extend(REPORTS)
 
+def get_per_cluster_bw(wildcards):
+    checkpoint_output = checkpoints.scatac_fragcluster.get(**wildcards).output[0]
+    return expand("Result/Analysis/Cluster/per_cluster/{cluster}.bw",
+        cluster=glob_wildcards(os.path.join(checkpoint_output, "{cluster}.tsv")).cluster)
+
+
+def get_per_sample_cluster_bw(wildcards):
+    checkpoint_output = checkpoints.scatac_fragcluster_per_sample.get(**wildcards).output[0]
+    return expand("Result/Analysis/Cluster/per_cluster_sample/{cluster}@{sample}.bw",
+        zip,
+        sample  = glob_wildcards(os.path.join(checkpoint_output, "{cluster}@{sample}.tsv")).sample,
+        cluster = glob_wildcards(os.path.join(checkpoint_output, "{cluster}@{sample}.tsv")).cluster)
+
+
 if config.get("batch"):
     TARGET.extend(PEAK_BATCH_COUNT)
     TARGET.append("Result/Analysis/Batch/all_samples_cell_cluster.txt")
 if config.get("annotation"):
     TARGET.extend(CLUSTER_ANNOTATION)
 
-rule all:
-    input: TARGET
+
+if config.get("clusterpeaks"):
+    rule all:
+        input: 
+            TARGET,
+            get_per_cluster_bw,
+            get_per_sample_cluster_bw
+else:
+    rule all:
+        input: 
+            TARGET         
 
 if config["platform"] == "10x-genomics" and config["format"] == "fastq":
     include: "rules/sc_atac_map.smk"
@@ -54,6 +77,8 @@ if config.get("annotation"):
 if config.get("batch"):
     include: "rules/sc_atac_peak_count_batch_filter.smk"
     include: "rules/sc_atac_batch_annotation.smk"
+    if config.get("clusterpeaks"):
+        include: "rules/sc_atac_peak_per_cluster.smk"
 include: "rules/sc_atac_report.smk"
 
 

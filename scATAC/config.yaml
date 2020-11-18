@@ -143,7 +143,7 @@ genedistance: 10000
 giggleannotation: /liulab/mtang/MAESTRO_test/annotations/giggle.all
 
 # Whether or not to call peaks by cluster [True, False]
-# If it's set True, MAESTRO will split the bam file according to clustering result, and then call peaks for each cluster.
+# If it's set True, MAESTRO will split the fragment file according to clustering result, and then call peaks for each cluster.
 # By default (not set), MAESTRO will skip this step.
 clusterpeaks : False
 
