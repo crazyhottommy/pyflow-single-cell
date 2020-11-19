@@ -34,7 +34,7 @@ cutoff_samples: 2
 ### un-downsampled fragment files.
 bulk_peaks: True
 downsample: True
-target_reads: 5000000
+target_reads: 50000000
 
 # define the genome file with the 1st column as chromosome name and
 # the 2nd column as chromosome length
@@ -71,14 +71,14 @@ platform: 10x-genomics
 # If the format is 'fastq', fastqdir and fastqprefix need to be set.
 # If the format is 'bam', bam needs to be set.
 # If the format is 'fragments', frag needs to be set.
-format: fragments
+format: fastq
 
 
 # deduplication at cell level or bulk level. "cell level" or "bulk level"
 deduplication: "cell level"
 
 
-input_path: /liulab/mtang/multi-sample_scRNAseq/scATAC_fragment/data
+input_path: /liulab/mtang/multi-sample_scRNAseq/cidc_scATAC_downsample/data
 
 # If the platform is 'sci-ATAC-seq' or '10x-genomics', please specify the barcode library (whitelist) 
 # so that the pipeline can correct cell barcodes with 1 base mismatched. 
