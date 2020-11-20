@@ -18,7 +18,7 @@ rule scatac_analysis:
         outdir = "Result/Analysis/{sample}",
         genescore = "{sample}_gene_score.h5",
         outpre = "{sample}",
-        count = "../../QC/{sample}/{sample}_filtered_peak_count.h5",
+        counts = "../../QC/{sample}/{sample}_filtered_peak_count.h5",
         fraggz = "../../minimap2/{sample}/fragments_corrected_dedup_count.tsv.gz",
         giggleannotation = config["giggleannotation"],
         species = config["species"],
@@ -28,8 +28,8 @@ rule scatac_analysis:
     threads:
         _annotation_threads
     benchmark:
-        "Result/Benchmark/{sample}_Analysis.benchmark" 
+        "Result/Benchmark/{sample}_Analysis.benchmark"
     shell:
-        "Rscript " + RSCRIPT_PATH + "/scATACseq_pipe.R --peakcount {params.count} --rpmatrix {params.genescore} "
+        "Rscript " + RSCRIPT_PATH + "/scATACseq_pipe.R --peakcount {params.counts} --rpmatrix {params.genescore} "
         "--species {params.species} --prefix {params.outpre} --annotation {params.annotation} --method {params.method} --signature {params.signature} "
         "--gigglelib {params.giggleannotation} --fragment {params.fraggz} --outdir {params.outdir} --thread {threads}"

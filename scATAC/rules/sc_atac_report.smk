@@ -3,7 +3,7 @@ rule scatac_report:
         # bulkqc = "Result/QC/" + config["outprefix"] + "_bam_stat.txt",
         qcfrag = "Result/QC/{sample}/{sample}_scATAC_fragment_size.png",
         qcfrip = "Result/QC/{sample}/{sample}_scATAC_cell_filtering.png",
-        count = "Result/QC/{sample}/{sample}_filtered_peak_count.h5",
+        counts = "Result/QC/{sample}/{sample}_filtered_peak_count.h5",
         clusterplot = "Result/Analysis/{sample}/{sample}_cluster.png",
         # annotateplot = "Result/Analysis/%s_annotated.png" %(config["outprefix"]),
         genescore = "Result/Analysis/{sample}/{sample}_gene_score.h5",

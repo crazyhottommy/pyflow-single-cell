@@ -1,0 +1,4 @@
+AttributeError in line 135 of /liulab/galib/sc_CIDC/pyflow-single-cell/scATAC/rules/sc_atac_qc.smk:
+invalid name for input, output, wildcard, params or log: count is reserved for internal use
+  File "/liulab/galib/sc_CIDC/pyflow-single-cell/scATAC/Snakefile", line 67, in <module>
+  File "/liulab/galib/sc_CIDC/pyflow-single-cell/scATAC/rules/sc_atac_qc.smk", line 135, in <module>
