@@ -2,7 +2,6 @@
 
 SAMPLES_JSON: samples.json
 
-
 #######################################################################################
 
 ############################# Multi-Sample processing parameters ######################
@@ -35,7 +34,7 @@ cutoff_samples: 2
 ### un-downsampled fragment files.
 bulk_peaks: True
 downsample: True
-target_reads: 5000000
+target_reads: 50000000
 
 # define the genome file with the 1st column as chromosome name and
 # the 2nd column as chromosome length
@@ -78,6 +77,9 @@ format: fastq
 # deduplication at cell level or bulk level. "cell level" or "bulk level"
 deduplication: "cell level"
 
+
+input_path: /liulab/mtang/multi-sample_scRNAseq/cidc_scATAC_downsample/data
+
 # If the platform is 'sci-ATAC-seq' or '10x-genomics', please specify the barcode library (whitelist) 
 # so that the pipeline can correct cell barcodes with 1 base mismatched. 
 # Otherwise, the pipeline will automatically output the barcodes with enough read count (>1000).
@@ -89,7 +91,7 @@ whitelist: reference_files/whitelist/737K-cratac-v1.txt
 # Whether or not to perform ccell-type annotation.
 # By default (not set), MAESTRO will skip the step of cell-type annotation. 
 # If set, please specify the method of cell-type annotation through method.
-annotation: False
+annotation: True
 
 # Method to annotate cell types [RP-based, peak-based, both]. 
 # MAESTRO provides two strategies to annotate cell types for scATAC-seq data. 
@@ -141,7 +143,7 @@ genedistance: 10000
 giggleannotation: /liulab/mtang/MAESTRO_test/annotations/giggle.all
 
 # Whether or not to call peaks by cluster [True, False]
-# If it's set True, MAESTRO will split the bam file according to clustering result, and then call peaks for each cluster.
+# If it's set True, MAESTRO will split the fragment file according to clustering result, and then call peaks for each cluster.
 # By default (not set), MAESTRO will skip this step.
 clusterpeaks : False
 

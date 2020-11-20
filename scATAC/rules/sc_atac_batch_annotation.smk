@@ -36,6 +36,9 @@ rule scatac_batch_merge_fragment:
         tmp_fragments = expand("Result/Tmp/{sample}_fragment_tmp.tsv", sample = ALL_SAMPLES)
     shell:
         """
+        # start from fragments, Tmp folder is not created by Snakemake
+        mkdir -p Result/Tmp
+
         for i in {input}
             do
                 prefix=$(echo $i | sed -E 's,Result/minimap2/(.+)/fragments_corrected_dedup_count.tsv,\\1,')
