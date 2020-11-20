@@ -1,3 +1,0 @@
-ModuleNotFoundError in line 5 of /Users/mtang/Dropbox (Partners HealthCare)/github_repos/pyflow-single-cell/scATAC/Snakefile:
-No module named 'MAESTRO'
-  File "/Users/mtang/Dropbox (Partners HealthCare)/github_repos/pyflow-single-cell/scATAC/Snakefile", line 5, in <module>
