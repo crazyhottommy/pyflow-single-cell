@@ -19,7 +19,7 @@ rule scatac_report:
         species = config["species"],
         platform = config["platform"],
         inputformat = config["format"],
-        outdir = "Result/Report/{sample}",
+        outdir = "Result/Report",
     benchmark:
         "Result/Benchmark/{sample}_Report.benchmark"
     shell:
