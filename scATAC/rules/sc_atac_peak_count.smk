@@ -6,7 +6,7 @@ rule scatac_countpeak:
         validbarcode = "Result/QC/{sample}/{sample}_scATAC_validcells.txt",
         frag = "Result/minimap2/{sample}/fragments_corrected_dedup_count.tsv"
     output:
-        count = "Result/Analysis/{sample}/{sample}_peak_count.h5"
+        counts = "Result/Analysis/{sample}/{sample}_peak_count.h5"
     params:
         species = config["species"],
         outdir = "Result/Analysis/{sample}",
@@ -14,7 +14,7 @@ rule scatac_countpeak:
     threads:
         _countpeak_threads
     benchmark:
-        "Result/Benchmark/{sample}_PeakCount.benchmark" 
+        "Result/Benchmark/{sample}_PeakCount.benchmark"
     shell:
         """
         MAESTRO scatac-peakcount --peak {input.finalpeak} --fragment {input.frag} --barcode {input.validbarcode} \
@@ -23,7 +23,7 @@ rule scatac_countpeak:
 
 rule scatac_qcfilter:
     input:
-        count = "Result/Analysis/{sample}/{sample}_peak_count.h5" 
+        counts = "Result/Analysis/{sample}/{sample}_peak_count.h5"
     output:
         filtercount = "Result/QC/{sample}/{sample}_filtered_peak_count.h5"
     params:
@@ -35,7 +35,7 @@ rule scatac_qcfilter:
         "Result/Benchmark/{sample}_QCFilter.benchmark"
     shell:
         """
-        MAESTRO scatac-qc --format h5 --peakcount {input.count} --peak-cutoff {params.peak} --cell-cutoff {params.cell} \
+        MAESTRO scatac-qc --format h5 --peakcount {input.counts} --peak-cutoff {params.peak} --cell-cutoff {params.cell} \
         --directory {params.outdir} --outprefix {params.outpre}
         """
 
@@ -44,7 +44,7 @@ rule scatac_genescore:
         filtercount = "Result/QC/{sample}/{sample}_filtered_peak_count.h5",
         genebed = "%s/annotations/%s_ensembl.bed" %(SCRIPT_PATH, config["species"]),
     output:
-        genescore = "Result/Analysis/{sample}/{sample}_gene_score.h5" 
+        genescore = "Result/Analysis/{sample}/{sample}_gene_score.h5"
     params:
         genedistance = config["genedistance"],
         species = config["species"],
@@ -55,9 +55,3 @@ rule scatac_genescore:
         "Result/Benchmark/{sample}_GeneScore.benchmark"
     shell:
         "MAESTRO scatac-genescore --format h5 --peakcount {input.filtercount} --species {params.species} --directory {params.outdir} --outprefix {params.outpre} --model {params.rpmodel}"
-
-
-
-
-
-        

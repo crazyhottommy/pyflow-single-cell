@@ -66,7 +66,7 @@ rule scatac_batch_analysis:
         outdir = "Result/Analysis/Batch",
         genescore = "all_samples_filtered_gene_count.h5",
         outpre = "all_samples",
-        count = "all_samples_filtered_peak_count.h5",
+        counts = "all_samples_filtered_peak_count.h5",
         fraggz = "all_samples_fragments_corrected_dedup_count.tsv.gz",
         giggleannotation = config["giggleannotation"],
         species = config["species"],
@@ -76,8 +76,8 @@ rule scatac_batch_analysis:
     threads:
         _annotation_threads
     benchmark:
-        "Result/Benchmark/all_samples_Analysis.benchmark" 
+        "Result/Benchmark/all_samples_Analysis.benchmark"
     shell:
-        "Rscript " + RSCRIPT_PATH + "/scATACseq_pipe.R --peakcount {params.count} --rpmatrix {params.genescore} "
+        "Rscript " + RSCRIPT_PATH + "/scATACseq_pipe.R --peakcount {params.counts} --rpmatrix {params.genescore} "
         "--species {params.species} --prefix {params.outpre} --annotation {params.annotation} --method {params.method} --signature {params.signature} "
         "--gigglelib {params.giggleannotation} --fragment {params.fraggz} --outdir {params.outdir} --thread {threads}"

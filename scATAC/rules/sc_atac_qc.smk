@@ -9,7 +9,7 @@ rule scatac_qcstat_mapped:
     params:
         frag_count_sort = "Result/minimap2/{sample}/fragments_corrected_count_sortedbybarcode.tsv"
     benchmark:
-        "Result/Benchmark/{sample}_SingleQCMappability.benchmark" 
+        "Result/Benchmark/{sample}_SingleQCMappability.benchmark"
     shell:
         """
         sort -k4,4 -V {input.frag_count} > {params.frag_count_sort}
@@ -28,7 +28,7 @@ rule scatac_qcstat_promoter:
         frag_promoter = "Result/minimap2/{sample}/fragments_promoter.tsv",
         frag_promoter_sort = "Result/minimap2/{sample}/fragments_promoter_sortbybarcode.tsv",
     benchmark:
-        "Result/Benchmark/{sample}_SingleQCPromoter.benchmark" 
+        "Result/Benchmark/{sample}_SingleQCPromoter.benchmark"
     shell:
         """
         bedtools intersect -wa -a {input.frag_count} -b {input.promoter} -u > {params.frag_promoter}
@@ -49,7 +49,7 @@ rule scatac_qcstat_singlecell:
         mapped_stat_sort = "Result/QC/{sample}/singlecell_mapped_sortbybarcode.txt",
         promoter_stat_sort = "Result/QC/{sample}/singlecell_promoter_sortbybarcode.txt"
     benchmark:
-        "Result/Benchmark/{sample}_SingleQCStat.benchmark" 
+        "Result/Benchmark/{sample}_SingleQCStat.benchmark"
     shell:
         """
         sort -k1,1 {input.mapped_stat} > {params.mapped_stat_sort}
@@ -82,7 +82,7 @@ if config["format"] == "fastq":
             bedtools bamtobed -i {output.bam} > {output.bed}
             grep 'chrM' {output.bed} -c >> {output.bulk_stat} || true
             grep -v 'chrM' {output.bed} | bedtools intersect -wa -a - -b {input.promoter} -u | wc -l >> {output.bulk_stat} || true
-            grep -v 'chrM' {output.bed} | bedtools intersect -wa -a - -b {input.peak} -u | wc -l >> {output.bulk_stat} || true 
+            grep -v 'chrM' {output.bed} | bedtools intersect -wa -a - -b {input.peak} -u | wc -l >> {output.bulk_stat} || true
             """
 elif config["format"] == "fragments":
     rule scatac_qcstat_bulk:
@@ -102,7 +102,7 @@ elif config["format"] == "fragments":
             awk '{{print $3-$2}}' {input.frag_dedup} > {output.fragbed}
             grep 'chrM' {input.frag_dedup} -c >> {output.bulk_stat} || true
             grep -v 'chrM' {input.frag_dedup} | bedtools intersect -wa -a - -b {input.promoter} -u | wc -l >> {output.bulk_stat} || true
-            grep -v 'chrM' {input.frag_dedup} | bedtools intersect -wa -a - -b {input.peak} -u | wc -l >> {output.bulk_stat} || true 
+            grep -v 'chrM' {input.frag_dedup} | bedtools intersect -wa -a - -b {input.peak} -u | wc -l >> {output.bulk_stat} || true
             """
 
 
@@ -124,20 +124,20 @@ if config["format"] == "fastq":
             fragbed = "{sample}_frag.bed",
             single_stat = "singlecell.txt",
             bulk_stat = "flagstat.txt",
-            count = config["cutoff"]["count"],
+            counts = config["cutoff"]["count"],
             frip = config["cutoff"]["frip"]
         threads:
             _qcplot_threads
         benchmark:
-            "Result/Benchmark/{sample}_QCPlot.benchmark" 
+            "Result/Benchmark/{sample}_QCPlot.benchmark"
         shell:
             "Rscript " + RSCRIPT_PATH + "/scATACseq_qc.R --bulkstat {params.bulk_stat} --fragment {params.fragbed} --singlestat {params.single_stat} "
-            "--countcutoff {params.count} --fripcutoff {params.frip} --prefix {params.outpre} --outdir {params.outdir}"
+            "--countcutoff {params.counts} --fripcutoff {params.frip} --prefix {params.outpre} --outdir {params.outdir}"
 elif config["format"] == "fragments":
     rule scatac_qcplot:
         input:
             fragbed = "Result/QC/{sample}/{sample}_frag.bed",
-            single_stat = "Result/QC/{sample}/singlecell.txt"        
+            single_stat = "Result/QC/{sample}/singlecell.txt"
         output:
             qcfrag = "Result/QC/{sample}/{sample}_scATAC_fragment_size.png",
             qcfrip = "Result/QC/{sample}/{sample}_scATAC_cell_filtering.png",
@@ -147,12 +147,12 @@ elif config["format"] == "fragments":
             outpre = "{sample}",
             fragbed = "{sample}_frag.bed",
             single_stat = "singlecell.txt",
-            count = config["cutoff"]["count"],
+            counts = config["cutoff"]["count"],
             frip = config["cutoff"]["frip"]
         threads:
             _qcplot_threads
         benchmark:
-            "Result/Benchmark/{sample}_QCPlot.benchmark" 
+            "Result/Benchmark/{sample}_QCPlot.benchmark"
         shell:
             "Rscript " + RSCRIPT_PATH + "/scATACseq_qc.R --fragment {params.fragbed} --singlestat {params.single_stat} "
-            "--countcutoff {params.count} --fripcutoff {params.frip} --prefix {params.outpre} --outdir {params.outdir}"
+            "--countcutoff {params.counts} --fripcutoff {params.frip} --prefix {params.outpre} --outdir {params.outdir}"
