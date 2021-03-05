@@ -19,7 +19,7 @@ genome:
   # Genome index directory for STAR. Users can just download the index file 
   # from http://cistrome.org/~chenfei/MAESTRO/Refdata_scRNA_MAESTRO_GRCh38_1.1.0.tar.gz and decompress it. 
   # Then specify the index directory for STAR, for example, 'Refdata_scRNA_MAESTRO_GRCh38_1.1.0/GRCh38_STAR_2.7.3a'.
-  mapindex: '/liulab/mtang/references/Refdata_scRNA_MAESTRO_GRCh38_1.1.0/GRCh38_STAR_2.7.3a'
+  mapindex: '/home/sv681/MAESTRO/ref/cellranger-3.0.2/STAR/5dda596/STAR'
 
   gtf: '/liulab/mtang/references/Refdata_scRNA_MAESTRO_GRCh38_1.1.0/genes.gtf'
   # The prefix of transcript references for RSEM used by rsem-prepare-reference (Only required when the platform is Smartseq2). 
